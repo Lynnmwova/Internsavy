@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "watch": "tailwindcss -i ./src/App.css -o ./dist/output.css --watch"
+    "watch": "tailwindcss -i ./src/index.css -o ./dist/output.css --watch"
 
   },
   "dependencies": {
