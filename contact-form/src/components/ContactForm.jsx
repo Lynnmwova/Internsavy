@@ -1,8 +1,8 @@
 function ContactForm() {
   return (
     <>
-      <div className="h-screen flex bg-gray-200">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+      <div className="h-screen flex bg-gray-200 pg bg-gradient-to-r from-cyan-500 to-blue-500">
+        <div className="w-full max-w-prose m-auto backdrop-blur-md bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
           <form>
             <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900:text-white">
@@ -11,15 +11,17 @@ function ContactForm() {
               </label>
               <input
                 type="string"
-                className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
               ></input>
+            </div>
+            <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900:text-white">
                 {" "}
                 Second name
               </label>
               <input
                 type="string"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
               ></input>
             </div>
             <div className="mb-6">
