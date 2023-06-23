@@ -1,8 +1,8 @@
 function ContactForm() {
   return (
     <>
-      <div className="h-screen flex bg-gray-200 pg bg-gradient-to-r from-cyan-500 to-blue-500">
-        <div className="w-full max-w-prose m-auto backdrop-blur-md bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+      <div className="h-screen flex bg-gray-200 pg">
+        <div className="w-full max-w-md m-auto backdrop-blur-md bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
           <form>
             <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900:text-white">
