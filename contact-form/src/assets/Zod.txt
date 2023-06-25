@@ -1,0 +1,49 @@
+## Bing
+You can use Zod with React.js by combining it with a form library such as React Hook Form  . Here is an example of how to use Zod with React Hook Form:
+
+[javascript]
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+const schema = z.object({
+  firstName: z.string().min(2).max(20),
+  lastName: z.string().min(2).max(20),
+  email: z.string().email(),
+});
+
+function App() {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: async (data) => {
+      try {
+        await schema.validate(data);
+        return { values: data, errors: {} };
+      } catch (error) {
+        return { values: {}, errors: error.formErrors.fieldErrors };
+      }
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input name="firstName" ref={register} />
+      {errors.firstName && <p>{errors.firstName.message}</p>}
+
+      <input name="lastName" ref={register} />
+      {errors.lastName && <p>{errors.lastName.message}</p>}
+
+      <input name="email" ref={register} />
+      {errors.email && <p>{errors.email.message}</p>}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+In this example, we define a schema using Zod and pass it to the resolver function of React Hook Form . The resolver function validates the form data against the schema and returns any validation errors . We then use the useForm hook to register form inputs and handle form submission .
+You can find more information about using Zod with React Hook Form in this tutorial . I hope this helps you get started with using Zod in your React.js projects! Let me know if you have any other questions.

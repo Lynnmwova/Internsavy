@@ -7,7 +7,11 @@ export default {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        hero: "url('../src/assets/background.jpg')",
+      },
+    },
   },
   plugins: [],
 };
