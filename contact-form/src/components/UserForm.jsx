@@ -1,6 +1,16 @@
-import { useState } from "react";
-import validator from "validator";
 import Select from "react-select";
+import PropTypes from "prop-types";
+
+import { useForm, useController } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  name: z.string().min(2).max(30),
+  email: z.string().email(),
+  country: z.string(),
+  message: z.string().min(10).max(200),
+});
 
 const countryOptions = [
   { value: "Kenya", label: "Kenya" },
@@ -9,38 +19,23 @@ const countryOptions = [
   { value: "Rwanda", label: "Rwanda" },
 ];
 
-const UseForm = ({ onSave, user = {} }) => {
-  const [userData, setUserData] = useState(user);
-  const [errors, setErrors] = useState({});
+const UserForm = ({ onSave, user = {} }) => {
+  const { register, control, handleSubmit, formState } = useForm({
+    defaultValues: user,
+    resolver: zodResolver(schema),
+  });
+  const { errors } = formState;
 
-  const { name, email, country, message } = userData;
-  const validateData = () => {
-    let errors = {};
-    if (!name) {
-      errors.name = "Name is required";
-    }
-    if (!validator.isEmail(email)) {
-      errors.name = "A valid email is required";
-    }
-    return errors;
-  };
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  const { field } = useController({ name: "country", control });
+
   const handleSelectChange = (option) => {
-    setUserData((prevData) => ({ ...prevData, country: option }));
+    field.onChange(option.value);
   };
-  const handleSave = () => {
-    const errors = validateData();
-    if (Object.keys(errors).length) {
-      setErrors(errors);
-      return;
-    }
-    setErrors({});
-    console.log({ userData });
-    onSave(userData);
+
+  const handleSave = (formValues) => {
+    onSave(formValues);
   };
+
   return (
     <div>
       <div className="h-screen flex bg-white pg bg-cover">
@@ -49,19 +44,18 @@ const UseForm = ({ onSave, user = {} }) => {
 
  py-10 px-16"
         >
-          <form>
+          <form onSubmit={handleSubmit(handleSave)}>
             <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900:text-white">
                 {" "}
                 Name
               </label>{" "}
               <input
-                name="Name"
-                value={name}
-                onChange={handleChange}
+                {...register("name")}
+                name="name"
                 className="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
               />
-              <div style={{ color: "red" }}>{errors.name}</div>
+              <div style={{ color: "red" }}>{errors.name?.message}</div>
             </div>
 
             <div className="mb-6">
@@ -70,19 +64,20 @@ const UseForm = ({ onSave, user = {} }) => {
                 Email{" "}
               </label>
               <input
+                {...register("email")}
                 name="email"
-                value={email}
-                onChange={handleChange}
                 className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               />
-              <div style={{ color: "red" }}>{errors.name}</div>
+              <div style={{ color: "red" }}>{errors.email?.message}</div>
             </div>
             <div className="mb-6">
               <label className="block mb-2 text-sm font-medium text-gray-900">
                 Select your country
               </label>
               <Select
-                value={countryOptions.find(({ value }) => value === country)}
+                value={countryOptions.find(
+                  ({ value }) => value === field.value
+                )}
                 onChange={handleSelectChange}
                 options={countryOptions}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -96,9 +91,9 @@ const UseForm = ({ onSave, user = {} }) => {
                 Message
               </label>
               <textarea
-                value={message}
+                {...register("message")}
                 name="message"
-                onChange={handleChange}
+                /*onChange={handleChange}*/
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                 placeholder="Leave us a message!"
               ></textarea>
@@ -108,7 +103,6 @@ const UseForm = ({ onSave, user = {} }) => {
               style={{ marginTop: "12px" }}
             >
               <button
-                onClick={handleSave}
                 type="submit"
                 className="px-4 py-2 text-sm text-blue-600 font-semibold rounded-full border border-blue-500 hover:text-white hover:bg-blue-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
@@ -122,4 +116,9 @@ const UseForm = ({ onSave, user = {} }) => {
   );
 };
 
-export default UseForm;
+UserForm.propTypes = {
+  user: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
+
+export default UserForm;

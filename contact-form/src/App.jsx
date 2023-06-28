@@ -1,10 +1,10 @@
-import ContactForm from "./components/ContactForm";
-import UseForm from "./components/UserForm";
+import UserForm from "./components/UserForm";
 
 function App() {
+  console.log("This Works");
   const user = {
-    name: "Pauline Mwova",
-    email: "paulinemwova@gmail.com",
+    name: "Jane Doe",
+    email: "janedoe@gmail.com",
     country: "Kenya",
     message: "I love your website!",
   };
@@ -16,7 +16,7 @@ function App() {
     <>
       <div>
         <h1>Contact Us!</h1>
-        <UseForm onSave={handleSend} {...{ user }} />
+        <UserForm onSave={handleSend} {...{ user }} />
       </div>
     </>
   );
