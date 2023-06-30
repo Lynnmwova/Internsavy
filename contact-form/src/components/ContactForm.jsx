@@ -3,7 +3,7 @@ function ContactForm() {
     <>
       <div className="h-screen flex bg-white pg bg-cover">
         <div
-          className="w-full max-w-md m-auto backdrop-blur-md bg-white rounded-lg border border-primaryBorder drop-shadow-2xl
+          className="  w-full max-w-md m-auto backdrop-blur-md bg-white rounded-lg border border-primaryBorder drop-shadow-2xl
 
  py-10 px-16"
         >
